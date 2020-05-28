@@ -39,7 +39,7 @@ const Login = ({ classes }) => {
         Welcome
       </Typography>
       <GoogleLogin
-        clientId="679663330596-to3kh4h96djprin5hgnk78db7ror83e3.apps.googleusercontent.com"
+        clientId={process.env.REACT_APP_GOOGLE_LOGIN_CLIENT}
         onSuccess={onSuccess}
         onFailure={onFailure}
         isSignedIn={true}
