@@ -8,6 +8,7 @@ import LandscapeIcon from "@material-ui/icons/LandscapeOutlined";
 import ClearIcon from "@material-ui/icons/Clear";
 import SaveIcon from "@material-ui/icons/SaveTwoTone";
 import Context from "../../context";
+import axios from 'axios'
 
 const CreatePin = ({ classes }) => {
   const [image, setImage] = useState("");
@@ -15,10 +16,20 @@ const CreatePin = ({ classes }) => {
   const [content, setContent] = useState("");
   const { dispatch } = useContext(Context);
 
-  const handleSubmit = event => {
+  const handleSubmit = async event => {
     event.preventDefault();
-    console.log({ title, image, content });
+    const url =  await handleImageUpload();
+    console.log({ title, image, content, url });
   };
+
+  const handleImageUpload = async() =>{
+    const formData = new FormData();
+    formData.append('file', image)
+    formData.append('upload_preset', 'WhatsUrLocation')
+    formData.append('cloud_name','dmdmt7hay')
+    const response = await axios.post('https://api.cloudinary.com/v1_1/dmdmt7hay/image/upload', formData);
+    return response.data.url;
+  }
 
   const handleDeleteDraft = () => {
     setImage("");
